@@ -16,6 +16,7 @@ loadMyEvents();
 
 function loadMyEvents() {
   document.addEventListener("DOMContentLoaded", getTasks);
+  UItoggle.addEventListener("click", darkMode);
   UItaskField.addEventListener("submit", addTask);
   UItaskList.addEventListener("click", removeTask);
   UItaskList.addEventListener("mousemove", dragListItem);
@@ -23,7 +24,6 @@ function loadMyEvents() {
   UIall.addEventListener("click", allTask);
   UIcompleted.addEventListener("click", completedTask);
   UIclearAll.addEventListener("click", clearCompleted);
-  UItoggle.addEventListener("click", darkMode);
 }
 
 function getTasks(e) {
