@@ -23,6 +23,7 @@ function loadMyEvents() {
   UIall.addEventListener("click", allTask);
   UIcompleted.addEventListener("click", completedTask);
   UIclearAll.addEventListener("click", clearCompleted);
+  UItoggle.addEventListener("click", darkMode);
 }
 
 function getTasks(e) {
@@ -64,10 +65,9 @@ function getTasks(e) {
     UIul.appendChild(UIli);
   });
 
-  
   activeNum();
   e.preventDefault();
-}
+};
 
 function addTask(e) {
   if (UItaskInput.value === "") {
@@ -107,7 +107,7 @@ function addTask(e) {
   addToLocalStorage();
   e.preventDefault();
   console.log(UIli);
-}
+};
 
 const addToLocalStorage = () => {
   const task = UItaskInput.value;
@@ -138,24 +138,46 @@ function removeTask(e) {
   }
 
   if (e.target.classList.contains("checkbox-div")) {
-    e.target.lastElementChild.style.display = "flex";
-    e.target.parentElement.children[1].setAttribute(
-      "style",
-      "text-decoration: line-through;color: hsl(233, 14%, 35%);"
-    );
-    // e.target.parentElement.className = "list-item striked";
-    e.target.parentElement.classList.add("striked");
+ 
+    if (document.body.className.includes("dark")) {
+      e.target.lastElementChild.style.display = "flex";
+      e.target.parentElement.classList.add("striked");
+      e.target.parentElement.children[1].setAttribute(
+        "style",
+        "text-decoration: line-through;color: hsl(233, 14%, 35%);"
+      );
+    } else {
+      e.target.lastElementChild.style.display = "flex";
+      e.target.parentElement.classList.add("striked");
+      e.target.parentElement.children[1].setAttribute(
+        "style",
+        "text-decoration: line-through;color: hsl(236, 33%, 92%);"
+        );
+    }
+
   } else if (e.target.classList.contains("checkbox")) {
-    e.target.style.display = "none";
-    e.target.parentElement.parentElement.children[1].setAttribute(
-      "style",
-      "text-decoration: none;color: hsl(236, 33%, 92%);"
-    );
-    // e.target.parentElement.parentElement.className = "list-item";
-    e.target.parentElement.parentElement.classList.remove("striked");
+
+    if (document.body.className.includes("dark")) {
+      e.target.style.display = "none";
+      e.target.parentElement.parentElement.classList.remove("striked");
+      e.target.parentElement.parentElement.children[1].setAttribute(
+        "style",
+        "text-decoration: none;color: hsl(236, 33%, 92%);"
+        );
+      } else {
+      e.target.style.display = "none";
+      e.target.parentElement.parentElement.classList.remove("striked");
+      e.target.parentElement.parentElement.children[1].setAttribute(
+        "style",
+        "text-decoration: none;color: hsl(233, 14%, 35%);"
+        );
+      }
+  
   }
   activeNum();
-}
+
+  e.preventDefault();
+};
 
 const removeFromLocalStorage = (taskItem) => {
   let tasks;
@@ -177,7 +199,6 @@ const removeFromLocalStorage = (taskItem) => {
 
 function activeTask(e) {
   let myList = document.querySelectorAll(".list-item");
-  console.log(myList);
 
   myList.forEach(function (task) {
     if (task.classList.contains("striked")) {
@@ -186,7 +207,7 @@ function activeTask(e) {
       task.style.display = "flex";
     }
   });
-}
+};
 
 function activeNum() {
   let UIfigure = document.querySelector(".figure");
@@ -200,11 +221,10 @@ function activeNum() {
   });
 
   UIfigure.textContent = taskArr.length;
-}
+};
 
 function completedTask(e) {
   let myList = document.querySelectorAll(".list-item");
-  console.log(myList);
 
   myList.forEach(function (task) {
     if (task.className.includes("striked") == false) {
@@ -214,22 +234,24 @@ function completedTask(e) {
       task.style.display = "flex";
     }
   });
-}
+
+  e.preventDefault();
+};
 
 function allTask(e) {
   let myList = document.querySelectorAll(".list-item");
-  console.log(myList);
 
   myList.forEach(function (task) {
     if (task.classList.contains("list-item")) {
       task.style.display = "flex";
     }
   });
-}
+
+  e.preventDefault();
+};
 
 function clearCompleted(e) {
   let myList = document.querySelectorAll(".list-item");
-  console.log(myList);
 
   if (confirm("Are you sure you want to clear all completed task")) {
     myList.forEach((task) => {
@@ -239,14 +261,10 @@ function clearCompleted(e) {
       }
     });
     allTask(e);
-  }
-  // myList.forEach(task => {
-  //   if (task.classList.contains("striked")) {
-  //       task.remove();
-  //       clearLocalStorage(task)
-  //   }
-  // });
-}
+  };
+
+  e.preventDefault();
+};
 
 const clearLocalStorage = (items) => {
   console.log(items);
@@ -274,38 +292,46 @@ function addEventsDragAndDrop(el) {
   el.addEventListener("dragleave", dragLeave, false);
   el.addEventListener("drop", dragDrop, false);
   el.addEventListener("dragend", dragEnd, false);
-}
+};
 
-function dragListItem (e) {
+function dragListItem(e) {
   var listItems = document.querySelectorAll(".list-item");
   [].forEach.call(listItems, function (item) {
     addEventsDragAndDrop(item);
   });
-}
+
+  e.preventDefault();
+};
 
 function dragStart(e) {
-  // console.log();
   this.style.opacity = "0.1";
   dragSrcEl = this;
   e.dataTransfer.effectAllowed = "move";
   e.dataTransfer.setData("text/html", this.innerHTML);
-  // console.log(e.dataTransfer);
-}
+
+  e.preventDefault();
+};
 
 function dragEnter(e) {
   this.classList.add("over");
-}
+
+  e.preventDefault();
+};
 
 function dragLeave(e) {
   e.stopPropagation();
   this.classList.remove("over");
-}
+
+  e.preventDefault();
+};
 
 function dragOver(e) {
   e.preventDefault();
   e.dataTransfer.dropEffect = "move";
   return false;
-}
+
+  e.preventDefault();
+};
 
 function dragDrop(e) {
   if (dragSrcEl != this) {
@@ -313,7 +339,9 @@ function dragDrop(e) {
     this.innerHTML = e.dataTransfer.getData("text/html");
   }
   return false;
-}
+
+  e.preventDefault();
+};
 
 function dragEnd(e) {
   var listItems = document.querySelectorAll(".draggable");
@@ -321,4 +349,20 @@ function dragEnd(e) {
     item.classList.remove("over");
   });
   this.style.opacity = "1";
-}
+
+  e.preventDefault();
+};
+
+function darkMode (e) {
+  document.body.classList.toggle("light");
+  document.body.classList.toggle("dark");
+
+
+  if (document.body.className.includes("dark")) {
+    e.target.setAttribute("src", "./images/icon-moon.svg");
+  } else {
+    e.target.setAttribute("src", "./images/icon-sun.svg");
+  };
+
+  e.preventDefault();
+};
