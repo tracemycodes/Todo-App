@@ -13,6 +13,7 @@
   --check-border: hsl(233, 14%, 35%);
   --footer-color: hsl(233, 14%, 35%);
   --hover-color: hsl(236, 33%, 92%);
+  --drag-background-color: #1c1d2e;
 }
 
 .light {
@@ -24,6 +25,7 @@
   --check-border: hsl(234, 39%, 85%);
   --footer-color: hsl(233, 25%, 79%);
   --hover-color: hsl(233, 14%, 35%);
+  --drag-background-color: #d2d3df;
 }
 
 .main {
@@ -197,6 +199,11 @@
   color: var(--footer-color);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.items-left {
+  color: #767577;
+}
+
 .breadcrumb {
   display: flex;
 }
@@ -227,5 +234,5 @@
 }
 
 .over {
-  background-color: #1c1d2e;
+  background-color: var(--drag-background-color);
 }
