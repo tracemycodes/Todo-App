@@ -10,7 +10,6 @@ const UIclearAll = document.querySelector(".clearAll");
 const UIlistItem = document.getElementsByTagName("li");
 const UIspan = document.querySelector(".figure");
 
-console.log(UIlistItem);
 
 loadMyEvents();
 
@@ -309,28 +308,22 @@ function dragStart(e) {
   e.dataTransfer.effectAllowed = "move";
   e.dataTransfer.setData("text/html", this.innerHTML);
 
-  e.preventDefault();
+  // e.preventDefault();
 };
 
 function dragEnter(e) {
   this.classList.add("over");
-
-  e.preventDefault();
 };
 
 function dragLeave(e) {
   e.stopPropagation();
   this.classList.remove("over");
-
-  e.preventDefault();
 };
 
 function dragOver(e) {
   e.preventDefault();
   e.dataTransfer.dropEffect = "move";
   return false;
-
-  e.preventDefault();
 };
 
 function dragDrop(e) {
@@ -339,8 +332,6 @@ function dragDrop(e) {
     this.innerHTML = e.dataTransfer.getData("text/html");
   }
   return false;
-
-  e.preventDefault();
 };
 
 function dragEnd(e) {
@@ -350,7 +341,6 @@ function dragEnd(e) {
   });
   this.style.opacity = "1";
 
-  e.preventDefault();
 };
 
 function darkMode (e) {
